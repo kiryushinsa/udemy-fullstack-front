@@ -14,10 +14,11 @@ export class ProductService {
   //injecr Httpclient
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(): Observable <Product[]> {
+  getProductList(theCategoryId: number): Observable <Product[]> {
 
-    // map the json data from spring data rest to Product array
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`; //
+    
+    return this.httpClient.get<GetResponse>(searchUrl).pipe(
       map(response => response._embedded.products) // _embedded get from response in spring 
     )
   }

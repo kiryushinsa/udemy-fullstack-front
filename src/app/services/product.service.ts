@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
-
-  private baseUrl =  'http://localhost:8080/api/products'
+ 
+  private baseUrl =  'http://localhost:8080/api/products'; //by default set of notes = 20, if you want change it need to set ?size=num
 
   //injecr Httpclient
   constructor(private httpClient: HttpClient) { }

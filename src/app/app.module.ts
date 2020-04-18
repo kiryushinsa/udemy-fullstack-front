@@ -7,9 +7,13 @@ import {HttpClientModule}  from  '@angular/common/http';
 import { ProductService } from './services/product.service';
 import { Routes,RouterModule } from '@angular/router';
 import { ProductCategoryMenuComponent } from './components/product-category-menu/product-category-menu.component';
+import { SearchComponent } from './components/search/search.component';
+import { ProductDetailsComponent } from './components/product-details/product-details.component';
 
 //define the routes for recall on the page
 const routes: Routes = [
+  
+  {path: 'search/:keyword', component: ProductListComponent},
   {path: 'category/:id/:name',component: ProductListComponent}, // when path mathes create new instance of component
   {path: 'category',component: ProductListComponent}, // by category
   {path: 'products',component: ProductListComponent}, // by products
@@ -20,7 +24,9 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     ProductListComponent,
-    ProductCategoryMenuComponent
+    ProductCategoryMenuComponent,
+    SearchComponent,
+    ProductDetailsComponent
   ],
   imports: [
     RouterModule.forRoot(routes), //import for rotes from const

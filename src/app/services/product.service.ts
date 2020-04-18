@@ -10,7 +10,6 @@ import { ProductCategory } from '../common/product-category';
 })
 export class ProductService {
 
-  
   private baseUrl =  'http://localhost:8080/api/products'; //by default set of notes = 20, if you want change it need to set ?size=num
   private categoryUrl ='http://localhost:8080/api/product-category';
   //injecr Httpclient
@@ -21,13 +20,21 @@ export class ProductService {
   getProductList(theCategoryId: number): Observable <Product[]> {
 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`; //
-    
-    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products) // _embedded get from response in spring 
-    );
+    return this.getProducts(searchUrl);
   }
 
 
+  searchProducts(theKeyword: string): Observable <Product[]>  {
+   
+    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`; //
+ 
+    return this.getProducts(searchUrl);
+  }
+
+
+  private getProducts(searchUrl: string): Observable<Product[]> {
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(map(response => response._embedded.products));
+  }
 
   getProductCategories(): Observable<ProductCategory[]> {
     
@@ -36,6 +43,11 @@ export class ProductService {
     );
   }
  
+
+
+ 
+
+
 
 }
 
@@ -53,4 +65,5 @@ interface GetResponseProductsCategory{
   _embedded: {
     productCategory: ProductCategory[];
   }
+
 }

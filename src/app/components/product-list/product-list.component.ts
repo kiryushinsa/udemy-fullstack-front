@@ -12,19 +12,51 @@ export class ProductListComponent implements OnInit {
   products: Product[];
   currentCategoryId: number; // id of current category
   currentCategoryName: string;
+  searchMode: boolean;
 
   constructor(private productService: ProductService,
               private route: ActivatedRoute) { }
 
-  ngOnInit() { //similar @PostConstruct
+  ngOnInit() { 
+    //similar @PostConstruct
     // hook where our app calling a list product method
     this.route.paramMap.subscribe(() =>{//
     this.listProducts();
     });
   }
 
+
+
   listProducts() {
 
+    this.searchMode = this.route.snapshot.paramMap.has('keyword'); // if we have search param on seacrch component - 1 true
+
+      if(this.searchMode){
+        this.handleSearchProducts();
+      }
+      else{
+        this.handleListProducts();
+      }
+  }
+
+
+
+
+
+
+  handleSearchProducts(){
+    const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
+
+    //now search for the products using keyword
+    this.productService.searchProducts(theKeyword).subscribe(
+      data =>{
+        this.products = data;
+      }
+    )
+  }
+
+
+  handleListProducts(){
     //check if id parametr is available
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id'); // link category/:id routes
 
@@ -47,5 +79,8 @@ export class ProductListComponent implements OnInit {
         this.products = data; // result are asign to the Product array
       }
     )
+
   }
+
+  
 }

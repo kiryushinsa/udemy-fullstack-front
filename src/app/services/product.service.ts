@@ -15,6 +15,13 @@ export class ProductService {
   //injecr Httpclient
   constructor(private httpClient: HttpClient) { }
 
+  
+  getProduct(theProductId: number): Observable <Product> {
+    //need build url based on product id
+    const productUrl = `${this.baseUrl}/${theProductId}`;
+    //because we use angular our dont neeed use additional operations for url
+    return this.httpClient.get<Product>(productUrl);
+  }
 
 
   getProductList(theCategoryId: number): Observable <Product[]> {
@@ -36,6 +43,8 @@ export class ProductService {
     return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(map(response => response._embedded.products));
   }
 
+
+
   getProductCategories(): Observable<ProductCategory[]> {
     
     return this.httpClient.get<GetResponseProductsCategory>(this.categoryUrl).pipe(
@@ -43,11 +52,6 @@ export class ProductService {
     );
   }
  
-
-
- 
-
-
 
 }
 

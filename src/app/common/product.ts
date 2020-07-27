@@ -1,8 +1,9 @@
 export class Product {
     // сopy of json returned on previos steps data rest api
+    id: string;
     sku: string;
     name: string;
-    decription: string;
+    description: string;
     unitPrice: number;
     imageUrl: string;
     active: boolean;
